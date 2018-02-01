@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Objects {
 	
@@ -20,6 +22,9 @@ public class Objects {
 	public static final WPI_TalonSRX drive1 = new WPI_TalonSRX(1);
 	public static final WPI_TalonSRX drive2 = new WPI_TalonSRX(2);
 	public static final WPI_TalonSRX drive3 = new WPI_TalonSRX(3);
+	public static final WPI_TalonSRX flywheelRight = new WPI_TalonSRX(4);
+	public static final WPI_TalonSRX flywheelLeft = new WPI_TalonSRX(5);
+	public static final WPI_TalonSRX armPivot = new WPI_TalonSRX(6);
 	
 	/**
 	 * Solenoids
@@ -29,6 +34,11 @@ public class Objects {
 	public static final Solenoid driveLeftShift = new Solenoid(4);
 	public static final Solenoid driveRightShift = new Solenoid(5);
 	
+	public static final Joystick controller = new Joystick(0);
+	
+	public static final Timer timer = new Timer();
+	
+	public static final double motorPower = .5;
 	/**
 	 * controller button maps
 	 */

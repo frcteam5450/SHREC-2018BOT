@@ -8,11 +8,13 @@
 package org.usfirst.frc.team5450.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.motorDrive;
+
+import org.usfirst.frc.team5450.robot.Objects;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmPivot;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,13 +23,18 @@ import org.usfirst.frc.team5450.robot.RobotCommandFunctions.motorDrive;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
+
+
+
 public class Robot extends IterativeRobot {
 	private static final String kDefaultAuto = "Default";
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 	
-	public static final Joystick controller = new Joystick(0);
+	DriveTrain drive = new DriveTrain(1 , 5 , 1);
+	
+	ArmPivot arm = new ArmPivot();
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -80,6 +87,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		arm.setInitArmPos();
 		
 	}
 	
@@ -89,8 +97,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		motorDrive.teleopDrive(controller.getRawAxis(Objects.LSY), controller.getRawAxis(Objects.RSY));
+		arm.setArm(10 , .0025);
+		
+		drive.setPower();
 	}
+	
 
 	/**
 	 * This function is called periodically during test mode.
