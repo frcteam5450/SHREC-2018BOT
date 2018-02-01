@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class ArmPivot {
 	
 	WPI_TalonSRX armPivotMotor = Objects.armPivot;
-	WPI_TalonSRX flywheelLeft = Objects.flywheelLeft;
-	WPI_TalonSRX flywheelRight = Objects.flywheelRight;
+	
 	
 	int initArmPos;
 	int armPos;
@@ -16,14 +15,13 @@ public class ArmPivot {
 	
 	Joystick control = Objects.controller;
 	
+	
 	public ArmPivot() {
 		armPivotMotor.set(0);
-		flywheelLeft.set(0);
-		flywheelRight.set(0);
 		
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-		armPos = 0;
-		armSetPoint = 0;
+		armPos = initArmPos;
+		armSetPoint = armPos;
 	}
 	
 	public void setArm(int increment , double gain) {
@@ -43,11 +41,10 @@ public class ArmPivot {
 		
 	}
 	
-	public void flyWheel(int intakeAxis, int outtakeAxis) {
-		
-	}
 	
 	public void setInitArmPos() {
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
+		armPos = initArmPos;
+		armSetPoint = armPos;
 	}
 }

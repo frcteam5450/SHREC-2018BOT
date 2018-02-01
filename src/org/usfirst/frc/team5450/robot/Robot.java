@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5450.robot.Objects;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmPivot;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmFlywheel;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	
 	DriveTrain drive = new DriveTrain(1 , 5 , 1);
 	
-	ArmPivot arm = new ArmPivot();
+	ArmFlywheel arm = new ArmFlywheel(2 , 3);
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		arm.setArm(10 , .0025);
-		
+		arm.flywheel();
 		drive.setPower();
 	}
 	
