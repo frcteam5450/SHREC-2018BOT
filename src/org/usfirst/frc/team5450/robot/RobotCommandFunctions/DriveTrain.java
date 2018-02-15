@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveTrain {
@@ -13,6 +14,8 @@ public class DriveTrain {
 	WPI_TalonSRX driveLeft2 = Objects.driveLeft2;
 	WPI_TalonSRX driveRight1 = Objects.driveRight1;
 	WPI_TalonSRX driveRight2 = Objects.driveRight2;
+	
+	ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	Encoder encoder = Objects.driveEnc;
 	
@@ -25,7 +28,7 @@ public class DriveTrain {
 	int rControl = 5;
 	int gearShift;
 	
-	double multiplier = .5;
+	double multiplier = .7;
 	
 	public DriveTrain(double k , WPI_TalonSRX motor1 , WPI_TalonSRX motor2 , WPI_TalonSRX motor3 , WPI_TalonSRX motor4 , Solenoid lShift , Solenoid rShift) {
 		multiplier = k;
@@ -50,7 +53,13 @@ public class DriveTrain {
 		gearShift = gear;
 	}
 	
-	public void setPower() {
+	public DriveTrain() {
+		
+	}
+	
+	public void setPower(double kMultiplier) {
+		multiplier = kMultiplier;
+		
 		double leftPower = (joy.getRawAxis(lControl)) * multiplier;
 		double rightPower = (joy.getRawAxis(rControl)) * multiplier;
 		
@@ -58,17 +67,6 @@ public class DriveTrain {
 		driveLeft2.set(-leftPower);
 		driveRight1.set(rightPower);
 		driveRight2.set(rightPower);
-	}
-	
-	public void setPower(double leftPower , double rightPower) {
-		driveLeft1.set(-leftPower);
-		driveLeft2.set(-leftPower);
-		driveRight1.set(rightPower);
-		driveRight2.set(rightPower);
-	}
-	
-	public void setMultiplier(double newVal) {
-		multiplier = newVal;
 	}
 	
 	public void stopDrive() {
@@ -86,5 +84,24 @@ public class DriveTrain {
 	
 	public long getDegrees() {
 		return encoder.get();
+	}
+	
+	public void driveStraight(double motorPower , double correction , double time) {
+		while (Objects.timer.get() < time) {
+		double degree = gyro.getAngle();
+		double rightPower = motorPower - (degree * correction);
+		
+		driveLeft1.set(motorPower);
+		driveLeft2.set(motorPower);
+		driveRight1.set(-rightPower);
+		driveRight2.set(-rightPower);
+		}
+	}
+	
+	public void showCurrent() {
+		SmartDashboard.putNumber("Back Left Drive Current", driveLeft1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Left Drive Current", driveLeft2.getOutputCurrent());
+		SmartDashboard.putNumber("Back Right Drive Current", driveRight1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Right Drive Current", driveRight2.getOutputCurrent());
 	}
 }

@@ -5,19 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/**
+ * Version 0.0.1
+ * @author FRC Team 5450 SHREC
+ * 
+ * Main Robot Code, work in progress.
+ * 
+ */
+
 package org.usfirst.frc.team5450.robot;
 
+/**
+ * Imports necessary wpi libraries
+ */
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
-
+/**
+ * Imports necessary custom robot classes
+ */
 import org.usfirst.frc.team5450.robot.Objects;
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmFlywheel;
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.Catapult;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.*;
 
-import autonomous.*;
+/**
+ * Imports necessary robot autonomous classes
+ */
+import org.usfirst.frc.team5450.robot.Autonomous.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,8 +43,11 @@ import autonomous.*;
  */
 
 
-
 public class Robot extends IterativeRobot {
+	
+	/**
+	 * Autonomous program selector string variables
+	 */
 	private static final String defaultAuto = "Default";
 	private static final String leftA = "Left A";
 	private static final String leftB = "Left B";
@@ -42,51 +60,89 @@ public class Robot extends IterativeRobot {
 	private static final String rightSwitch = "Right Switch";
 	
 	private String m_autoSelected;
+	
+	/**
+	 * Speed selector string variables (for testing, will be removed in final code)
+	 */
+	private static final String speed1 = "Speed 1";
+	private static final String speed2 = "Speed 2";
+	private static final String speed3 = "Speed 3";
+	
+	private String m_speedSelection;
+	
+	/**
+	 * SendableChooser declarations, for auto program selector,
+	 * and speed selector; removed in final code
+	 */
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
+	private SendableChooser<String> m_speedSelector = new SendableChooser<>();
 	
-	DriveTrain drive = new DriveTrain(1 , 5 , 1);
+	/**
+	 * Robot component declarations
+	 */
+	DriveTrain drive = new DriveTrain(1 , 5 , 1); //DriveTrain declaration
 	
-	ArmFlywheel arm = new ArmFlywheel(2 , 3);
+	ArmFlywheel arm = new ArmFlywheel(2 , 3); //Arm declaration
 	
-	Catapult catapult = new Catapult();
+	Catapult catapult = new Catapult(); //Catapult declartion
 	
+	ADXRS450_Gyro gyro = new ADXRS450_Gyro(); //Gyro declaration
+	
+	/**
+	 * Variables for various checks and constants.
+	 */
+	boolean autoCheck;
+	double speed;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+		
+		/**
+		 * Adds programs to auto program chooser
+		 */
+		//cross line and default programs
 		m_chooser.addDefault("Default Auto - Does Nothing", defaultAuto);
 		m_chooser.addObject("Left A - Drives Forward", leftA);
 		m_chooser.addObject("Left B - Turns Left, Drives Forward", leftB);
 		m_chooser.addObject("Middle - Turns Right, Drives Forward", middle);
 		m_chooser.addObject("Right - Drives Forward", right);
 		
+		//Switch placing programs
 		m_chooser.addObject("Left A Switch - Places Cube in Switch", leftASwitch);
 		m_chooser.addObject("Left B Switch - Places Cube in Switch", leftBSwitch);
 		m_chooser.addObject("Middle Switch - Places Cube in Switch", middleSwitch);
 		m_chooser.addObject("Right Switch - Places Cube in Switch", rightSwitch);
 		
+		/**
+		 * Places auto chooser on SmartDashboard
+		 */
 		SmartDashboard.putData("Auto choices", m_chooser);
+		
+		/**
+		 * adds speeds to speed selector
+		 */
+		m_speedSelector.addDefault("Speed 1, Default - 30%", speed1);
+		m_speedSelector.addObject("Speed 2 - 60%", speed2);
+		m_speedSelector.addObject("Speed 3 - 80%", speed3);
+		
+		SmartDashboard.putData("Speed Choices - Teleop" , m_speedSelector);
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional comparisons to
-	 * the switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
+	 * This function is called once; when autonomous first starts
+	 * Is used for autonomous initialization code
 	 */
 	@Override
 	public void autonomousInit() {
 		m_autoSelected = m_chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
 		System.out.println("Auto selected: " + m_autoSelected);
+		/**
+		 * Initializes autoCheck to true when autonomous is first started
+		 */
+		autoCheck = true;
 	}
 
 	/**
@@ -94,41 +150,61 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (m_autoSelected) {
+		
+		/**
+		 * Checks to make sure autonomous has not already run
+		 */
+		if (autoCheck) {
+		
+			/**
+			 * Checks for selected auto program and runs the  appropriate one
+			 */
+			switch (m_autoSelected) {
 			
-			case right:
-			case leftA:
-				LeftA.leftARight();
-				break;
+				case right:
+				case leftA:
+					LeftA.leftARight();
+					autoCheck = false;
+					break;
 			
-			case leftB:
-				LeftB.leftB();
-				break;
+				case leftB:
+					LeftB.leftB();
+					autoCheck = false;
+					break;
 				
-			case middle:
-				Middle.middle();
-				break;
+				case middle:
+					Middle.middle();
+					autoCheck = false;
+					break;
+					
+				case leftASwitch:
+					LeftASwitch.leftASwitch();
+					autoCheck = false;
+					break;
+					
+				case leftBSwitch:
+					LeftBSwitch.leftBSwitch();
+					autoCheck = false;
+					break;
+					
+				case middleSwitch:
+					MiddleSwitch.middleSwitch();
+					autoCheck = false;
+					break;
+					
+				case rightSwitch:
+					RightSwitch.rightSwitch();
+					autoCheck = false;
+					break;
 				
-			case leftASwitch:
-				LeftASwitch.leftASwitch();
-				break;
-				
-			case leftBSwitch:
-				LeftBSwitch.leftBSwitch();
-				break;
-				
-			case middleSwitch:
-				MiddleSwitch.middleSwitch();
-				break;
-				
-			case rightSwitch:
-				RightSwitch.rightSwitch();
-				break;
-				
-			case defaultAuto:
-			default:
-				// Put default auto code here
-				break;
+				/**
+				 * Default auto program, does nothing for safety purposes
+				 */
+				case defaultAuto:
+				default:
+					
+					break;
+			}
 		}
 	}
 	
@@ -138,10 +214,19 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		
+		/**
+		 * Starts compressor
+		 */
 		Objects.compressor.start();
 		
+		/**
+		 * Sets initial arm position
+		 */
 		arm.setInitArmPos();
 		
+		/**
+		 * Sets initial catapult state (off)
+		 */
 		catapult.stop();
 	}
 	
@@ -151,23 +236,51 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
+		/**
+		 * SmartDashboard speed selector (for testing, will be removed
+		 * in final code)
+		 */
+		m_speedSelection = m_speedSelector.getSelected();
+		
+		switch (m_speedSelection) {
+			case speed1:
+				speed = .3;
+				break;
+			case speed2:
+				speed = .6;
+				break;
+			case speed3:
+				speed = .8;
+				break;
+		}
+		
+		/**
+		 * Sets arm pivot and flywheel power based on controller input
+		 */
 		arm.setArm(1500 , .0175);
 		arm.flywheel();
-		drive.setPower();
 		
+		/**
+		 * Sets drive power based on controller,
+		 * and shows output current of motors on the SmartDashboard.
+		 */
+		drive.setPower(speed);
+		drive.showCurrent();
+		
+		/**
+		 * Fires catapult when 'A' is pressed.
+		 */
 		if (Objects.controller.getRawButton(1)) {
-			while (Objects.controller.getRawButton(1));
+			while (Objects.controller.getRawButton(1)); //Button debounce
 			catapult.fire(.7);
 		}
 		
+		/**
+		 * Places encoder value on SmartDashboard.
+		 */
 		SmartDashboard.putNumber("encoder", drive.getDegrees());
+		
 	}
 	
-
-	/**
-	 * This function is called periodically during test mode.
-	 */
-	@Override
-	public void testPeriodic() {
-	}
 }
