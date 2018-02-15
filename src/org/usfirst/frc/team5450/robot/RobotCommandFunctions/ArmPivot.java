@@ -20,7 +20,7 @@ public class ArmPivot {
 		armPivotMotor.set(0);
 		
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-		armPos = 0;
+		armPos = initArmPos;
 		armSetPoint = armPos;
 	}
 	
@@ -35,21 +35,16 @@ public class ArmPivot {
 			Objects.timer.delay(.1);
 		}
 		
-		int armError = -(armSetPoint - armPos);
+		int armError = armSetPoint - initArmPos;
 		double armPower = armError * gain;
 		armPivotMotor.set(armPower);
-		armPos = armPivotMotor.getSelectedSensorPosition(0) - initArmPos;
 		
 	}
 	
 	
 	public void setInitArmPos() {
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-		armPos = 0;
+		armPos = initArmPos;
 		armSetPoint = armPos;
-	}
-	
-	public void displayArmPos() {
-		
 	}
 }
