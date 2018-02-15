@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5450.robot.Objects;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmFlywheel;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.Catapult;
+
+import autonomous.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,8 +30,17 @@ import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmFlywheel;
 
 
 public class Robot extends IterativeRobot {
-	private static final String kDefaultAuto = "Default";
-	private static final String kCustomAuto = "My Auto";
+	private static final String defaultAuto = "Default";
+	private static final String leftA = "Left A";
+	private static final String leftB = "Left B";
+	private static final String middle = "Middle";
+	private static final String right = "Right";
+	
+	private static final String leftASwitch = "Left A Switch";
+	private static final String leftBSwitch = "Left B Switch";
+	private static final String middleSwitch = "Middle Switch";
+	private static final String rightSwitch = "Right Switch";
+	
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 	
@@ -36,14 +48,25 @@ public class Robot extends IterativeRobot {
 	
 	ArmFlywheel arm = new ArmFlywheel(2 , 3);
 	
+	Catapult catapult = new Catapult();
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		m_chooser.addDefault("Default Auto", kDefaultAuto);
-		m_chooser.addObject("My Auto", kCustomAuto);
+		m_chooser.addDefault("Default Auto - Does Nothing", defaultAuto);
+		m_chooser.addObject("Left A - Drives Forward", leftA);
+		m_chooser.addObject("Left B - Turns Left, Drives Forward", leftB);
+		m_chooser.addObject("Middle - Turns Right, Drives Forward", middle);
+		m_chooser.addObject("Right - Drives Forward", right);
+		
+		m_chooser.addObject("Left A Switch - Places Cube in Switch", leftASwitch);
+		m_chooser.addObject("Left B Switch - Places Cube in Switch", leftBSwitch);
+		m_chooser.addObject("Middle Switch - Places Cube in Switch", middleSwitch);
+		m_chooser.addObject("Right Switch - Places Cube in Switch", rightSwitch);
+		
 		SmartDashboard.putData("Auto choices", m_chooser);
 	}
 
@@ -72,10 +95,37 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		switch (m_autoSelected) {
-			case kCustomAuto:
-				// Put custom auto code here
+			
+			case right:
+			case leftA:
+				LeftA.leftARight();
 				break;
-			case kDefaultAuto:
+			
+			case leftB:
+				LeftB.leftB();
+				break;
+				
+			case middle:
+				Middle.middle();
+				break;
+				
+			case leftASwitch:
+				LeftASwitch.leftASwitch();
+				break;
+				
+			case leftBSwitch:
+				LeftBSwitch.leftBSwitch();
+				break;
+				
+			case middleSwitch:
+				MiddleSwitch.middleSwitch();
+				break;
+				
+			case rightSwitch:
+				RightSwitch.rightSwitch();
+				break;
+				
+			case defaultAuto:
 			default:
 				// Put default auto code here
 				break;
@@ -87,8 +137,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		
+		Objects.compressor.start();
+		
 		arm.setInitArmPos();
 		
+		catapult.stop();
 	}
 	
 	
@@ -97,9 +151,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		arm.setArm(10 , .0025);
+		arm.setArm(1500 , .0175);
 		arm.flywheel();
 		drive.setPower();
+		
+		if (Objects.controller.getRawButton(1)) {
+			while (Objects.controller.getRawButton(1));
+			catapult.fire(.7);
+		}
+		
+		SmartDashboard.putNumber("encoder", drive.getDegrees());
 	}
 	
 
