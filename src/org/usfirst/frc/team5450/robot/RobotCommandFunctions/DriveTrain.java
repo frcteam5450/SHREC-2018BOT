@@ -4,13 +4,17 @@ import org.usfirst.frc.team5450.robot.Objects;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveTrain {
 	
-	WPI_TalonSRX drive1 = Objects.drive0;
-	WPI_TalonSRX drive2 = Objects.drive1;
-	WPI_TalonSRX drive3 = Objects.drive2;
-	WPI_TalonSRX drive4 = Objects.drive3;
+	WPI_TalonSRX driveLeft1 = Objects.driveLeft1;
+	WPI_TalonSRX driveLeft2 = Objects.driveLeft2;
+	WPI_TalonSRX driveRight1 = Objects.driveRight1;
+	WPI_TalonSRX driveRight2 = Objects.driveRight2;
+	
+	Encoder encoder = Objects.driveEnc;
 	
 	Solenoid shift1 = Objects.driveLeftShift;
 	Solenoid shift2 = Objects.driveRightShift;
@@ -25,12 +29,19 @@ public class DriveTrain {
 	
 	public DriveTrain(double k , WPI_TalonSRX motor1 , WPI_TalonSRX motor2 , WPI_TalonSRX motor3 , WPI_TalonSRX motor4 , Solenoid lShift , Solenoid rShift) {
 		multiplier = k;
-		drive1 = motor1;
-		drive2 = motor2;
-		drive3 = motor3;
-		drive4 = motor4;
+		driveLeft1 = motor1;
+		driveLeft2 = motor2;
+		driveRight1 = motor3;
+		driveRight2 = motor4;
 		shift1 = lShift;
 		shift2 = rShift;
+		
+		encoder.reset();
+		encoder.setMaxPeriod(.1);
+		encoder.setMinRate(10);
+		encoder.setDistancePerPulse(5);
+		encoder.setReverseDirection(true);
+		encoder.setSamplesToAverage(7);
 	}
 	
 	public DriveTrain(int leftControlAxis , int rightControlAxis , int gear) {
@@ -43,17 +54,17 @@ public class DriveTrain {
 		double leftPower = (joy.getRawAxis(lControl)) * multiplier;
 		double rightPower = (joy.getRawAxis(rControl)) * multiplier;
 		
-		drive1.set(-leftPower);
-		drive2.set(-leftPower);
-		drive3.set(rightPower);
-		drive4.set(rightPower);
+		driveLeft1.set(-leftPower);
+		driveLeft2.set(-leftPower);
+		driveRight1.set(rightPower);
+		driveRight2.set(rightPower);
 	}
 	
 	public void setPower(double leftPower , double rightPower) {
-		drive1.set(-leftPower);
-		drive2.set(-leftPower);
-		drive3.set(rightPower);
-		drive4.set(rightPower);
+		driveLeft1.set(-leftPower);
+		driveLeft2.set(-leftPower);
+		driveRight1.set(rightPower);
+		driveRight2.set(rightPower);
 	}
 	
 	public void setMultiplier(double newVal) {
@@ -61,15 +72,19 @@ public class DriveTrain {
 	}
 	
 	public void stopDrive() {
-		drive4.set(0);
-		drive1.set(0);
-		drive2.set(0);
-		drive3.set(0);
+		driveRight2.set(0);
+		driveLeft1.set(0);
+		driveLeft2.set(0);
+		driveRight1.set(0);
 	}
 	
 	public void shift() {
 		shift1.set(!gearState);
 		shift2.set(!gearState);
 		gearState = !gearState;
+	}
+	
+	public long getDegrees() {
+		return encoder.get();
 	}
 }

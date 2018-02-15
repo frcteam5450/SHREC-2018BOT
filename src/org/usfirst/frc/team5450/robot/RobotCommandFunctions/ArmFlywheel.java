@@ -24,16 +24,16 @@ public class ArmFlywheel extends ArmPivot {
 	}
 	
 	public void flywheel() {
-		double inSpeed = control.getRawAxis(iAxis);
-		double outSpeed = control.getRawAxis(oAxis);
+		double inSpeed = .75 *control.getRawAxis(iAxis);
+		double outSpeed = .25 * control.getRawAxis(oAxis);
 		
 		if (inSpeed > 0.1) {
-			flywheelLeft.set(-inSpeed);
+			flywheelLeft.set(inSpeed);
 			flywheelRight.set(inSpeed);
 		}
 		
 		if (outSpeed > 0.1) {
-			flywheelLeft.set(outSpeed);
+			flywheelLeft.set(-outSpeed);
 			flywheelRight.set(-outSpeed);
 		}
 		
