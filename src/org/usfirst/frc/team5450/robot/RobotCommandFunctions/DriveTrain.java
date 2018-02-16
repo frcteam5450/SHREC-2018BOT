@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveTrain {
@@ -14,7 +15,9 @@ public class DriveTrain {
 	WPI_TalonSRX driveRight1 = Objects.driveRight1;
 	WPI_TalonSRX driveRight2 = Objects.driveRight2;
 	
-	Encoder encoder = Objects.driveEnc;
+	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	
+	public static Encoder encoder = Objects.driveEnc;
 	
 	Solenoid shift1 = Objects.driveLeftShift;
 	Solenoid shift2 = Objects.driveRightShift;
@@ -25,7 +28,7 @@ public class DriveTrain {
 	int rControl = 5;
 	int gearShift;
 	
-	double multiplier = .5;
+	double multiplier = .7;
 	
 	public DriveTrain(double k , WPI_TalonSRX motor1 , WPI_TalonSRX motor2 , WPI_TalonSRX motor3 , WPI_TalonSRX motor4 , Solenoid lShift , Solenoid rShift) {
 		multiplier = k;
@@ -50,7 +53,13 @@ public class DriveTrain {
 		gearShift = gear;
 	}
 	
-	public void setPower() {
+	public DriveTrain() {
+		
+	}
+	
+	public void setPower(double kMultiplier) {
+		multiplier = kMultiplier;
+		
 		double leftPower = (joy.getRawAxis(lControl)) * multiplier;
 		double rightPower = (joy.getRawAxis(rControl)) * multiplier;
 		
@@ -58,17 +67,6 @@ public class DriveTrain {
 		driveLeft2.set(-leftPower);
 		driveRight1.set(rightPower);
 		driveRight2.set(rightPower);
-	}
-	
-	public void setPower(double leftPower , double rightPower) {
-		driveLeft1.set(-leftPower);
-		driveLeft2.set(-leftPower);
-		driveRight1.set(rightPower);
-		driveRight2.set(rightPower);
-	}
-	
-	public void setMultiplier(double newVal) {
-		multiplier = newVal;
 	}
 	
 	public void stopDrive() {
@@ -86,5 +84,56 @@ public class DriveTrain {
 	
 	public long getDegrees() {
 		return encoder.get();
+	}
+	
+	public void driveStraight(double motorPower , double gain , double distance) {
+		
+		double encoderCount = 230 * distance;
+		
+		encoder.reset();
+		while (encoder.get() < encoderCount) {
+		double degree = gyro.getAngle();
+		double rightPower = motorPower + (degree * gain);
+		
+		driveLeft1.set(motorPower);
+		driveLeft2.set(motorPower);
+		driveRight1.set(-rightPower);
+		driveRight2.set(-rightPower);
+		SmartDashboard.putNumber("Gyro", degree);
+		SmartDashboard.putNumber("Right Power", rightPower);
+		SmartDashboard.putNumber("Auto Encoder", encoder.get());
+		showCurrent();
+		}
+	}
+	
+	public void turn(double motorPower , double degrees) {
+		double error = degrees - gyro.getAngle();
+		
+		while (error > 5) {
+			error = degrees - gyro.getAngle();
+			driveLeft1.set(motorPower);
+			driveLeft2.set(motorPower);
+			driveRight1.set(motorPower);
+			driveRight2.set(motorPower);
+			showCurrent();
+		}
+		
+		while (error < -5) {
+			error = degrees - gyro.getAngle();
+			driveLeft1.set(-motorPower);
+			driveLeft2.set(-motorPower);
+			driveRight1.set(-motorPower);
+			driveRight2.set(-motorPower);
+			showCurrent();
+		}
+		stopDrive();
+	}
+	
+	public void showCurrent() {
+		SmartDashboard.putNumber("Back Left Drive Current", driveLeft1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Left Drive Current", driveLeft2.getOutputCurrent());
+		SmartDashboard.putNumber("Back Right Drive Current", driveRight1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Right Drive Current", driveRight2.getOutputCurrent());
+		SmartDashboard.putNumber("gyro", gyro.getAngle());
 	}
 }
