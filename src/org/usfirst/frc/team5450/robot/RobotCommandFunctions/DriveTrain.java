@@ -15,9 +15,15 @@ public class DriveTrain {
 	WPI_TalonSRX driveRight1 = Objects.driveRight1;
 	WPI_TalonSRX driveRight2 = Objects.driveRight2;
 	
+<<<<<<< HEAD
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static Encoder encoder = Objects.driveEnc;
+=======
+	ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	
+	Encoder encoder = Objects.driveEnc;
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 	
 	Solenoid shift1 = Objects.driveLeftShift;
 	Solenoid shift2 = Objects.driveRightShift;
@@ -86,6 +92,7 @@ public class DriveTrain {
 		return encoder.get();
 	}
 	
+<<<<<<< HEAD
 	public void driveStraight(double motorPower , double gain , double distance) {
 		
 		double encoderCount = 230 * distance;
@@ -94,11 +101,18 @@ public class DriveTrain {
 		while (encoder.get() < encoderCount) {
 		double degree = gyro.getAngle();
 		double rightPower = motorPower + (degree * gain);
+=======
+	public void driveStraight(double motorPower , double correction , double time) {
+		while (Objects.timer.get() < time) {
+		double degree = gyro.getAngle();
+		double rightPower = motorPower - (degree * correction);
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 		
 		driveLeft1.set(motorPower);
 		driveLeft2.set(motorPower);
 		driveRight1.set(-rightPower);
 		driveRight2.set(-rightPower);
+<<<<<<< HEAD
 		SmartDashboard.putNumber("Gyro", degree);
 		SmartDashboard.putNumber("Right Power", rightPower);
 		SmartDashboard.putNumber("Auto Encoder", encoder.get());
@@ -127,6 +141,9 @@ public class DriveTrain {
 			showCurrent();
 		}
 		stopDrive();
+=======
+		}
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 	}
 	
 	public void showCurrent() {
@@ -134,6 +151,9 @@ public class DriveTrain {
 		SmartDashboard.putNumber("Front Left Drive Current", driveLeft2.getOutputCurrent());
 		SmartDashboard.putNumber("Back Right Drive Current", driveRight1.getOutputCurrent());
 		SmartDashboard.putNumber("Front Right Drive Current", driveRight2.getOutputCurrent());
+<<<<<<< HEAD
 		SmartDashboard.putNumber("gyro", gyro.getAngle());
+=======
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 	}
 }

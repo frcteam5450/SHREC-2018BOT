@@ -21,6 +21,7 @@ package org.usfirst.frc.team5450.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 /**
  * Imports necessary custom robot classes
@@ -60,13 +61,31 @@ public class Robot extends IterativeRobot {
 	
 	private String m_autoSelected;
 	
+<<<<<<< HEAD
+=======
+	/**
+	 * Speed selector string variables (for testing, will be removed in final code)
+	 */
+	private static final String speed1 = "Speed 1";
+	private static final String speed2 = "Speed 2";
+	private static final String speed3 = "Speed 3";
+	
+	private String m_speedSelection;
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 	
 	/**
 	 * SendableChooser declarations, for auto program selector,
 	 * and speed selector; removed in final code
 	 */
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
+	private SendableChooser<String> m_speedSelector = new SendableChooser<>();
 	
+	/**
+	 * Robot component declarations
+	 */
+	DriveTrain drive = new DriveTrain(1 , 5 , 1); //DriveTrain declaration
+	
+<<<<<<< HEAD
 	/**
 	 * Robot component declarations
 	 */
@@ -76,6 +95,13 @@ public class Robot extends IterativeRobot {
 	
 	Catapult catapult = new Catapult(); //Catapult declartion
 	
+=======
+	ArmFlywheel arm = new ArmFlywheel(2 , 3); //Arm declaration
+	
+	Catapult catapult = new Catapult(); //Catapult declartion
+	
+	ADXRS450_Gyro gyro = new ADXRS450_Gyro(); //Gyro declaration
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 	
 	/**
 	 * Variables for various checks and constants.
@@ -110,6 +136,17 @@ public class Robot extends IterativeRobot {
 		 */
 		SmartDashboard.putData("Auto choices", m_chooser);
 		
+<<<<<<< HEAD
+=======
+		/**
+		 * adds speeds to speed selector
+		 */
+		m_speedSelector.addDefault("Speed 1, Default - 30%", speed1);
+		m_speedSelector.addObject("Speed 2 - 60%", speed2);
+		m_speedSelector.addObject("Speed 3 - 80%", speed3);
+		
+		SmartDashboard.putData("Speed Choices - Teleop" , m_speedSelector);
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 	}
 
 	/**
@@ -153,6 +190,7 @@ public class Robot extends IterativeRobot {
 					LeftB.leftB();
 					autoCheck = false;
 					break;
+<<<<<<< HEAD
 				
 				case middle:
 					Middle.middle();
@@ -179,12 +217,44 @@ public class Robot extends IterativeRobot {
 					autoCheck = false;
 					break;
 				
+=======
+				
+				case middle:
+					Middle.middle();
+					autoCheck = false;
+					break;
+					
+				case leftASwitch:
+					LeftASwitch.leftASwitch();
+					autoCheck = false;
+					break;
+					
+				case leftBSwitch:
+					LeftBSwitch.leftBSwitch();
+					autoCheck = false;
+					break;
+					
+				case middleSwitch:
+					MiddleSwitch.middleSwitch();
+					autoCheck = false;
+					break;
+					
+				case rightSwitch:
+					RightSwitch.rightSwitch();
+					autoCheck = false;
+					break;
+				
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 				/**
 				 * Default auto program, does nothing for safety purposes
 				 */
 				case defaultAuto:
 				default:
+<<<<<<< HEAD
 					drive.stopDrive();
+=======
+					
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 					break;
 			}
 		}
@@ -224,6 +294,27 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		
 		/**
+<<<<<<< HEAD
+=======
+		 * SmartDashboard speed selector (for testing, will be removed
+		 * in final code)
+		 */
+		m_speedSelection = m_speedSelector.getSelected();
+		
+		switch (m_speedSelection) {
+			case speed1:
+				speed = .3;
+				break;
+			case speed2:
+				speed = .6;
+				break;
+			case speed3:
+				speed = .8;
+				break;
+		}
+		
+		/**
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 		 * Sets arm pivot and flywheel power based on controller input
 		 */
 		arm.setArm(1500 , .0175);
@@ -233,7 +324,11 @@ public class Robot extends IterativeRobot {
 		 * Sets drive power based on controller,
 		 * and shows output current of motors on the SmartDashboard.
 		 */
+<<<<<<< HEAD
 		drive.setPower(.7);
+=======
+		drive.setPower(speed);
+>>>>>>> bd84e7d5faee94b050f4da1a7795772740b30476
 		drive.showCurrent();
 		
 		/**
