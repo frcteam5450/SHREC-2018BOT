@@ -47,6 +47,7 @@ import org.usfirst.frc.team5450.robot.Autonomous.*;
 
 public class Robot extends IterativeRobot {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	/**
 	 * Autonomous program selector string variables
@@ -73,6 +74,8 @@ public class Robot extends IterativeRobot {
 	
 	/**
 =======
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	
 	/**
 	 * Autonomous program selector string variables
@@ -98,11 +101,15 @@ public class Robot extends IterativeRobot {
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 	
 	/**
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	 * Robot component declarations
 	 */
 	DriveTrain drive = new DriveTrain(1 , 5 , 1); //DriveTrain declaration
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ArmFlywheel arm = new ArmFlywheel(3 , 2); //Arm declaration
 	
@@ -124,10 +131,21 @@ public class Robot extends IterativeRobot {
 	ArmFlywheel arm = new ArmFlywheel(2 , 3); //Arm declaration
 	
 	Catapult catapult = new Catapult(); //Catapult declartion
+=======
+	ArmFlywheel arm = new ArmFlywheel(2 , 3); //Arm declaration
+	
+	Catapult catapult = new Catapult(); //Catapult declartion
+	
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	
 	
+	/**
+	 * Variables for various checks and constants.
+	 */
+	boolean autoCheck;
+	double speed;
 	/**
 	 * Variables for various checks and constants.
 	 */
@@ -150,6 +168,7 @@ public class Robot extends IterativeRobot {
 		 */
 		//cross line and default programs
 <<<<<<< HEAD
+<<<<<<< HEAD
 		autoPositionChooser.addDefault("Auto Positions - This is Default Position, Does Nothing", defaultAuto);
 		autoPositionChooser.addObject("Left Position - Next to Portal on Left Wall", left);
 		autoPositionChooser.addObject("Middle - On Right Side of Exchange", middle);
@@ -160,6 +179,8 @@ public class Robot extends IterativeRobot {
 		autoActionChooser.addObject("Score on Switch", scoreSwitch);
 		autoActionChooser.addObject("Score on Scale", scoreScale);
 =======
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		m_chooser.addDefault("Default Auto - Does Nothing", defaultAuto);
 		m_chooser.addObject("Left A - Drives Forward", leftA);
 		m_chooser.addObject("Left B - Turns Left, Drives Forward", leftB);
@@ -171,15 +192,23 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Left B Switch - Places Cube in Switch", leftBSwitch);
 		m_chooser.addObject("Middle Switch - Places Cube in Switch", middleSwitch);
 		m_chooser.addObject("Right Switch - Places Cube in Switch", rightSwitch);
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		
 		/**
 		 * Places auto chooser on SmartDashboard
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		SmartDashboard.putData("Auto choices", autoPositionChooser);
 		
 		camera.startAutomaticCapture();
+=======
+		SmartDashboard.putData("Auto choices", m_chooser);
+		
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 =======
 		SmartDashboard.putData("Auto choices", m_chooser);
 		
@@ -200,6 +229,9 @@ public class Robot extends IterativeRobot {
 =======
 		m_autoSelected = m_chooser.getSelected();
 		System.out.println("Auto selected: " + m_autoSelected);
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		/**
 		 * Initializes autoCheck to true when autonomous is first started
@@ -218,6 +250,7 @@ public class Robot extends IterativeRobot {
 		 * Checks to make sure autonomous has not already run
 		 */
 		if (autoCheck) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 			/**
@@ -299,6 +332,8 @@ public class Robot extends IterativeRobot {
 					}
 					
 =======
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		
 			/**
 			 * Checks for selected auto program and runs the  appropriate one
@@ -339,6 +374,9 @@ public class Robot extends IterativeRobot {
 				case rightSwitch:
 					RightSwitch.rightSwitch();
 					autoCheck = false;
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 					break;
 				
@@ -359,6 +397,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		/**
 		 * Starts compressor
@@ -369,6 +408,8 @@ public class Robot extends IterativeRobot {
 		 * Sets initial arm position
 		 */
 =======
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		
 		/**
 		 * Starts compressor
@@ -384,16 +425,22 @@ public class Robot extends IterativeRobot {
 		 * Sets initial catapult state (off)
 		 */
 		catapult.stop();
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		
 		drive.stopDrive();
 		DriveTrain.gyro.reset();
 		DriveTrain.encoder.reset();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		teleopTimer.reset();
 		teleopTimer.start();
 		catapultDelay.start();
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 =======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	}
@@ -411,7 +458,10 @@ public class Robot extends IterativeRobot {
 		arm.setArm(1500 , .0175);
 		arm.flywheel();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		arm.displayStats();
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 =======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		
@@ -420,6 +470,7 @@ public class Robot extends IterativeRobot {
 		 * and shows output current of motors on the SmartDashboard.
 		 */
 		drive.setPower(.7);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		drive.displayStats();
 		if (drive.gearState && !catapultFiring)
@@ -430,11 +481,15 @@ public class Robot extends IterativeRobot {
 =======
 		drive.showCurrent();
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+		drive.showCurrent();
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 		
 		/**
 		 * Fires catapult when 'A' is pressed.
 		 */
 		if (Objects.controller.getRawButton(1)) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			catapultFiring = true;
 			lights.setLights("catapultFire");
@@ -490,6 +545,8 @@ public class Robot extends IterativeRobot {
 			climber.displayStats();
 		}
 =======
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 			while (Objects.controller.getRawButton(1)); //Button debounce
 			catapult.fire(.7);
 		}
@@ -499,6 +556,9 @@ public class Robot extends IterativeRobot {
 		 */
 		SmartDashboard.putNumber("encoder", drive.getDegrees());
 		
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	}
 	

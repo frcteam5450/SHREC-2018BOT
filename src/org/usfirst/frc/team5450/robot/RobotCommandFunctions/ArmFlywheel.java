@@ -27,8 +27,13 @@ public class ArmFlywheel extends ArmPivot {
 	
 	public void flywheel() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		double inSpeed = .70 *control.getRawAxis(iAxis);
 		double outSpeed = .60 * control.getRawAxis(oAxis);
+=======
+		double inSpeed = .75 *control.getRawAxis(iAxis);
+		double outSpeed = .75 * control.getRawAxis(oAxis);
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 =======
 		double inSpeed = .75 *control.getRawAxis(iAxis);
 		double outSpeed = .75 * control.getRawAxis(oAxis);
@@ -46,8 +51,13 @@ public class ArmFlywheel extends ArmPivot {
 		
 		if (outSpeed <= 0.1 && inSpeed <= 0.1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			flywheelLeft.set(0.1);
 			flywheelRight.set(0.1);
+=======
+			flywheelLeft.set(0.075);
+			flywheelRight.set(0.075);
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 =======
 			flywheelLeft.set(0.075);
 			flywheelRight.set(0.075);

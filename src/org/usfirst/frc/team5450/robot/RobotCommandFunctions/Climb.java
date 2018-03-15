@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package org.usfirst.frc.team5450.robot.RobotCommandFunctions;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -58,6 +59,20 @@ public class Climb {
 	
 	
 }
+=======
+package org.usfirst.frc.team5450.robot.RobotCommandFunctions;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import org.usfirst.frc.team5450.robot.Objects;
+
+public class Climb {
+	WPI_TalonSRX extenderWinch = Objects.extenderWinch;
+	WPI_TalonSRX climbingWinch = Objects.climbingWinch;
+	
+	
+	
+}
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 =======
 package org.usfirst.frc.team5450.robot.RobotCommandFunctions;
 

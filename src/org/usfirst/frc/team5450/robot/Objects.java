@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -46,6 +49,8 @@ public class Objects {
 	
 	public static final Compressor compressor = new Compressor();
 	
+	public static final Compressor compressor = new Compressor();
+	
 	public static final Joystick controller = new Joystick(0);
 	
 	public static final Timer timer = new Timer();
@@ -71,6 +76,9 @@ public class Objects {
 	 * encoder - greyhill 63R256 - 256 counts per rotation
 	 */
 	public static Encoder driveEnc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
 >>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
 	
 }
