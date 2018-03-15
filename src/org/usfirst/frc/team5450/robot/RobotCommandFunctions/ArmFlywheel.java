@@ -4,6 +4,8 @@ import org.usfirst.frc.team5450.robot.Objects;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ArmFlywheel extends ArmPivot {
 	
 	WPI_TalonSRX flywheelLeft = Objects.flywheelLeft;
@@ -24,22 +26,43 @@ public class ArmFlywheel extends ArmPivot {
 	}
 	
 	public void flywheel() {
-		double inSpeed = control.getRawAxis(iAxis);
-		double outSpeed = control.getRawAxis(oAxis);
+		double inSpeed = .70 *control.getRawAxis(iAxis);
+		double outSpeed = .60 * control.getRawAxis(oAxis);
 		
 		if (inSpeed > 0.1) {
-			flywheelLeft.set(-inSpeed);
+			flywheelLeft.set(inSpeed);
 			flywheelRight.set(inSpeed);
 		}
 		
 		if (outSpeed > 0.1) {
-			flywheelLeft.set(outSpeed);
+			flywheelLeft.set(-outSpeed);
 			flywheelRight.set(-outSpeed);
 		}
 		
 		if (outSpeed <= 0.1 && inSpeed <= 0.1) {
-			flywheelLeft.set(0);
-			flywheelRight.set(0);
+			flywheelLeft.set(0.1);
+			flywheelRight.set(0.1);
 		}
+	}
+	
+	public void flywheelIn(double speed) {
+		flywheelLeft.set(speed);
+		flywheelRight.set(speed);
+	}
+	
+	public void flywheelOut(double speed) {
+		flywheelLeft.set(-speed);
+		flywheelRight.set(-speed);
+		Objects.timer.delay(2.5);
+		flywheelLeft.set(0);
+		flywheelRight.set(0);
+	}
+	
+	public void displayStats() {
+		SmartDashboard.putNumber("Encoder Raw",armPivotMotor.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Encoder Degree:", getArmDegree());
+		SmartDashboard.putNumber("Arm Pivot Motor", armPivotMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Left Flywheel", flywheelLeft.getOutputCurrent());
+		SmartDashboard.putNumber("Right Flywheel", flywheelRight.getOutputCurrent());
 	}
 }
