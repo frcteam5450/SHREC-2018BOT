@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 package org.usfirst.frc.team5450.robot.Autonomous;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmFlywheel;
@@ -29,3 +34,32 @@ public class Middle {
 		
 	}
 }
+<<<<<<< HEAD
+=======
+=======
+package org.usfirst.frc.team5450.robot.Autonomous;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
+
+public class Middle {
+	
+	static DriveTrain drive = new DriveTrain();
+	
+	public static void middle() {
+		
+	}
+}
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+package org.usfirst.frc.team5450.robot.Autonomous;
+import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
+
+public class Middle {
+	
+	static DriveTrain drive = new DriveTrain();
+	
+	public static void middle() {
+		
+	}
+}
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359

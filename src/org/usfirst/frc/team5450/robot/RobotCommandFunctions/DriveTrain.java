@@ -14,10 +14,30 @@ public class DriveTrain {
 	WPI_TalonSRX driveLeft2 = Objects.driveLeft2;
 	WPI_TalonSRX driveRight1 = Objects.driveRight1;
 	WPI_TalonSRX driveRight2 = Objects.driveRight2;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static Encoder encoder = Objects.driveEnc;
+<<<<<<< HEAD
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+	
+	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	
+	public static Encoder encoder = Objects.driveEnc;
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+	
+	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	
+	public static Encoder encoder = Objects.driveEnc;
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	Solenoid shift = Objects.driveShift;
 	public boolean gearState = false;
@@ -36,7 +56,21 @@ public class DriveTrain {
 		driveLeft2 = motor2;
 		driveRight1 = motor3;
 		driveRight2 = motor4;
+<<<<<<< HEAD
 		shift.set(false);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+		shift.set(false);
+=======
+		shift1 = lShift;
+		shift2 = rShift;
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+		shift1 = lShift;
+		shift2 = rShift;
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 		
 		encoder.reset();
 		encoder.setMaxPeriod(.1);
@@ -53,6 +87,11 @@ public class DriveTrain {
 	}
 	
 	public DriveTrain() {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 		
 	}
 	
@@ -78,10 +117,47 @@ public class DriveTrain {
 	public void shift() {
 		shift.set(!gearState);
 		gearState = !gearState;
+<<<<<<< HEAD
 	}
 	
 	public long getDegrees() {
 		return encoder.get();
+=======
+	}
+	
+	public long getDegrees() {
+		return encoder.get();
+=======
+		
+	}
+	
+=======
+		
+	}
+	
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+	public void setPower(double kMultiplier) {
+		multiplier = kMultiplier;
+		
+		double leftPower = (joy.getRawAxis(lControl)) * multiplier;
+		double rightPower = (joy.getRawAxis(rControl)) * multiplier;
+		
+		driveLeft1.set(-leftPower);
+		driveLeft2.set(-leftPower);
+		driveRight1.set(rightPower);
+		driveRight2.set(rightPower);
+	}
+	
+	public void stopDrive() {
+		driveRight2.set(0);
+		driveLeft1.set(0);
+		driveLeft2.set(0);
+		driveRight1.set(0);
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	}
 	
 	public void driveStraight(double motorPower , double gain , double distance) {
@@ -142,5 +218,118 @@ public class DriveTrain {
 		else
 			gear = "Low";
 		SmartDashboard.putString("Gear:", gear);
+<<<<<<< HEAD
+=======
+	}
+	
+	public long getDegrees() {
+		return encoder.get();
+	}
+	
+	public void driveStraight(double motorPower , double gain , double distance) {
+		
+		double encoderCount = 230 * distance;
+		
+		encoder.reset();
+		while (encoder.get() < encoderCount) {
+		double degree = gyro.getAngle();
+		double rightPower = motorPower + (degree * gain);
+		
+		driveLeft1.set(motorPower);
+		driveLeft2.set(motorPower);
+		driveRight1.set(-rightPower);
+		driveRight2.set(-rightPower);
+		SmartDashboard.putNumber("Gyro", degree);
+		SmartDashboard.putNumber("Right Power", rightPower);
+		SmartDashboard.putNumber("Auto Encoder", encoder.get());
+		showCurrent();
+		}
+	}
+	
+	public void turn(double motorPower , double degrees) {
+		double error = degrees - gyro.getAngle();
+		
+		while (error > 5) {
+			error = degrees - gyro.getAngle();
+			driveLeft1.set(motorPower);
+			driveLeft2.set(motorPower);
+			driveRight1.set(motorPower);
+			driveRight2.set(motorPower);
+			showCurrent();
+		}
+		
+		while (error < -5) {
+			error = degrees - gyro.getAngle();
+			driveLeft1.set(-motorPower);
+			driveLeft2.set(-motorPower);
+			driveRight1.set(-motorPower);
+			driveRight2.set(-motorPower);
+			showCurrent();
+		}
+		stopDrive();
+	}
+	
+	public void showCurrent() {
+		SmartDashboard.putNumber("Back Left Drive Current", driveLeft1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Left Drive Current", driveLeft2.getOutputCurrent());
+		SmartDashboard.putNumber("Back Right Drive Current", driveRight1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Right Drive Current", driveRight2.getOutputCurrent());
+		SmartDashboard.putNumber("gyro", gyro.getAngle());
+	}
+	
+	public long getDegrees() {
+		return encoder.get();
+	}
+	
+	public void driveStraight(double motorPower , double gain , double distance) {
+		
+		double encoderCount = 230 * distance;
+		
+		encoder.reset();
+		while (encoder.get() < encoderCount) {
+		double degree = gyro.getAngle();
+		double rightPower = motorPower + (degree * gain);
+		
+		driveLeft1.set(motorPower);
+		driveLeft2.set(motorPower);
+		driveRight1.set(-rightPower);
+		driveRight2.set(-rightPower);
+		SmartDashboard.putNumber("Gyro", degree);
+		SmartDashboard.putNumber("Right Power", rightPower);
+		SmartDashboard.putNumber("Auto Encoder", encoder.get());
+		showCurrent();
+		}
+	}
+	
+	public void turn(double motorPower , double degrees) {
+		double error = degrees - gyro.getAngle();
+		
+		while (error > 5) {
+			error = degrees - gyro.getAngle();
+			driveLeft1.set(motorPower);
+			driveLeft2.set(motorPower);
+			driveRight1.set(motorPower);
+			driveRight2.set(motorPower);
+			showCurrent();
+		}
+		
+		while (error < -5) {
+			error = degrees - gyro.getAngle();
+			driveLeft1.set(-motorPower);
+			driveLeft2.set(-motorPower);
+			driveRight1.set(-motorPower);
+			driveRight2.set(-motorPower);
+			showCurrent();
+		}
+		stopDrive();
+	}
+	
+	public void showCurrent() {
+		SmartDashboard.putNumber("Back Left Drive Current", driveLeft1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Left Drive Current", driveLeft2.getOutputCurrent());
+		SmartDashboard.putNumber("Back Right Drive Current", driveRight1.getOutputCurrent());
+		SmartDashboard.putNumber("Front Right Drive Current", driveRight2.getOutputCurrent());
+		SmartDashboard.putNumber("gyro", gyro.getAngle());
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	}
 }

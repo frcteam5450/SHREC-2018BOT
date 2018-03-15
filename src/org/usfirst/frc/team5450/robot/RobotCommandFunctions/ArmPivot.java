@@ -16,11 +16,23 @@ public class ArmPivot {
 	int armSetPoint;
 	int armVelSetPoint = 0;
 	int armVel;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	int armLoadPos = 0;
 	int armShootPos = 90;
 	int armExchangePos = 135;
 	int armIntakePos = 180;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	Joystick control = Objects.controller;
 	
@@ -28,18 +40,51 @@ public class ArmPivot {
 	public ArmPivot() {
 		armPivotMotor.set(0);
 		
+<<<<<<< HEAD
 		//initArmPos = armPivotMotor.getSelectedSensorPosition(0);
+=======
+<<<<<<< HEAD
+		//initArmPos = armPivotMotor.getSelectedSensorPosition(0);
+=======
+		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
+<<<<<<< HEAD
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 		armPos = 0;
 		armSetPoint = armPos;
 	}
 	
 	public void setArm(int increment , double gain) {
+<<<<<<< HEAD
+<<<<<<< HEAD
 		if (control.getRawButton(5) == true) {
+<<<<<<< HEAD
+=======
+=======
+		if (control.getRawButton(6) == true) {
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+		if (control.getRawButton(6) == true) {
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 			armVelSetPoint = -200;//armSetPoint - increment;
 			//Objects.timer.delay(.25);
 		}
 		
+<<<<<<< HEAD
+<<<<<<< HEAD
 		if (control.getRawButton(6) == true) {
+<<<<<<< HEAD
+=======
+=======
+		if (control.getRawButton(5) == true) {
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+		if (control.getRawButton(5) == true) {
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 			armVelSetPoint = 200;//armSetPoint + increment;
 			//Objects.timer.delay(.25);
 		}
@@ -100,6 +145,11 @@ public class ArmPivot {
 		armSetPoint = armPos;
 	}
 	
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	public double getArmDegree() {
 		double degree = (-initArmPos + armPivotMotor.getSelectedSensorPosition(0)) * .0023809;
 		return degree;
@@ -131,5 +181,16 @@ public class ArmPivot {
 	public void setArmToIntake() {
 		double power = (getArmDegree() - 180) * .01;
 		armPivotMotor.set(power);
+<<<<<<< HEAD
+=======
+=======
+	public void displayArmPos() {
+		
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+=======
+	public void displayArmPos() {
+		
+>>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
+>>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	}
 }
