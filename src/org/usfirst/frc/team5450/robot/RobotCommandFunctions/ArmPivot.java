@@ -2,7 +2,10 @@ package org.usfirst.frc.team5450.robot.RobotCommandFunctions;
 
 import org.usfirst.frc.team5450.robot.Objects;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ArmPivot {
@@ -11,85 +14,41 @@ public class ArmPivot {
 	
 	
 	int armPosition = 1;
-	int initArmPos = -1700;
+	int initArmPos;
 	int armPos;
 	int armSetPoint;
 	int armVelSetPoint = 0;
 	int armVel;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	int armLoadPos = 0;
 	int armShootPos = 90;
 	int armExchangePos = 135;
 	int armIntakePos = 180;
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	Joystick control = Objects.controller;
-	
+	public static Timer timer = new Timer();
+    public boolean testBool=DriverStation.getInstance().isAutonomous();
 	
 	public ArmPivot() {
 		armPivotMotor.set(0);
 		
-<<<<<<< HEAD
-		//initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-=======
-<<<<<<< HEAD
-		//initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-=======
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-<<<<<<< HEAD
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 		armPos = 0;
 		armSetPoint = armPos;
 	}
 	
 	public void setArm(int increment , double gain) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (control.getRawButton(5) == true) {
-<<<<<<< HEAD
-=======
-=======
-		if (control.getRawButton(6) == true) {
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
-		if (control.getRawButton(6) == true) {
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
+		if (control.getRawButton(5) == true || Objects.controller2.getRawButton(5) == true) {
 			armVelSetPoint = -200;//armSetPoint - increment;
 			//Objects.timer.delay(.25);
 		}
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (control.getRawButton(6) == true) {
-<<<<<<< HEAD
-=======
-=======
-		if (control.getRawButton(5) == true) {
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
-		if (control.getRawButton(5) == true) {
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
+		if (control.getRawButton(6) == true || Objects.controller2.getRawButton(6) == true) {
 			armVelSetPoint = 200;//armSetPoint + increment;
 			//Objects.timer.delay(.25);
 		}
 		
-		if (control.getRawButton(6) == false && control.getRawButton(5) == false)
+		if (control.getRawButton(6) == false && control.getRawButton(5) == false && Objects.controller2.getRawButton(6) == false && Objects.controller2.getRawButton(5) == false)
 			armVelSetPoint = 0;
 		
 		int armError = -(armVelSetPoint - armVel);
@@ -141,17 +100,12 @@ public class ArmPivot {
 	
 	public void setInitArmPos() {
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
-		armPos = 0;
-		armSetPoint = armPos;
+		//armPos = 0;
+		//armSetPoint = armPos;
 	}
 	
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	public double getArmDegree() {
-		double degree = (-initArmPos + armPivotMotor.getSelectedSensorPosition(0)) * .0023809;
+		double degree = (armPivotMotor.getSelectedSensorPosition(0) - initArmPos) * .0023809;
 		return degree;
 	}
 	
@@ -162,10 +116,16 @@ public class ArmPivot {
 	
 	public void setArmToFire(boolean wait) {
 		if (wait) {
-			while (getArmDegree() <= 85 || getArmDegree() >= 95) {
-				double power = (getArmDegree() - 90) * .01;
+			while (testBool && getArmDegree() <= 50) {
+				double power = (getArmDegree() - 60) * .05;
 				armPivotMotor.set(power);
+				
+		        //updates testBool
+		        testBool=DriverStation.getInstance().isAutonomous();
+		        //added a 10 msec delay
+		        timer.delay(0.010);
 			}
+			armPivotMotor.set(0);
 		}
 		else {
 			double power = (getArmDegree() - 90) * .01;
@@ -181,16 +141,5 @@ public class ArmPivot {
 	public void setArmToIntake() {
 		double power = (getArmDegree() - 180) * .01;
 		armPivotMotor.set(power);
-<<<<<<< HEAD
-=======
-=======
-	public void displayArmPos() {
-		
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
-	public void displayArmPos() {
-		
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	}
 }

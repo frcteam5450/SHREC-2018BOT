@@ -1,18 +1,5 @@
 package org.usfirst.frc.team5450.robot;
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.AnalogOutput;
-<<<<<<< HEAD
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -49,15 +36,9 @@ public class Objects {
 	
 	public static final Compressor compressor = new Compressor();
 	public static final Relay compRelay = new Relay(0);
-<<<<<<< HEAD
-=======
-	
-	public static final Compressor compressor = new Compressor();
-	
-	public static final Compressor compressor = new Compressor();
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 	public static final Joystick controller = new Joystick(0);
+	public static final Joystick controller2 = new Joystick(1);
 	
 	public static final Timer timer = new Timer();
 	
@@ -67,29 +48,7 @@ public class Objects {
 	/**
 	 * encoder - greyhill 63R256 - 256 counts per rotation
 	 */
-<<<<<<< HEAD
 	public static Encoder driveEnc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	public static Encoder climbEnc = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
-=======
-<<<<<<< HEAD
-	public static Encoder driveEnc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-	public static Encoder climbEnc = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
-=======
-	public static final int LSX = 0;
-	public static final int LSY = 1;
-	public static final int LT = 2;
-	public static final int RT = 3;
-	public static final int RSX = 4;
-	public static final int RSY = 5;		
-	
-	/**
-	 * encoder - greyhill 63R256 - 256 counts per rotation
-	 */
-	public static Encoder driveEnc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-<<<<<<< HEAD
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 	
 }

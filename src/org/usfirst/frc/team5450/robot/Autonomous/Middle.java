@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359
 package org.usfirst.frc.team5450.robot.Autonomous;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
+import org.usfirst.frc.team5450.robot.Objects;
 import org.usfirst.frc.team5450.robot.RobotCommandFunctions.ArmFlywheel;
 
 public class Middle {
@@ -13,53 +9,39 @@ public class Middle {
 	static ArmFlywheel arm = new ArmFlywheel(3, 2);
 	
 	public static void leftSwitch() {
+		//timer delay was originally .25
+		drive.driveStraight(.45, .05, 77/160); //originally .35 * (5.5/4)
+		Objects.timer.delay(.15);
+		drive.turn(.5, -50);
+		Objects.timer.delay(.15);
+		drive.driveStraight(.5, .05, 77/50); //1.12 * (5.5/4)
+		Objects.timer.delay(.15);
+		drive.turn(.5, 47);
+		drive.driveStraight(.4, .05, 209/160);//.95 * (5.5/4)
+		Objects.timer.delay(.15);
 		arm.setArmToFire(true);
-		drive.driveStraight(.75, .01, 2);
-		drive.turn(.75, -50);
-		drive.driveStraight(.75, .01, 6.5);
-		drive.turn(.75, 35);
-		arm.flywheelOut(.65);
+		arm.flywheelOut(.35);
+		Objects.timer.delay(1);
+		arm.flywheelOut(0);
 	}
 	
 	public static void rightSwitch() {
+		drive.driveStraight(.45, .05, 77/160);//.35 * (5.5/4)
+		Objects.timer.delay(.15);
+		drive.turn(.5, 50);
+		Objects.timer.delay(.15);
+		drive.driveStraight(.5, .05, 121/80);//1.1 * (5.5/4)
+		Objects.timer.delay(.15);
+		drive.turn(.5, -49);
+		drive.driveStraight(.38, .05, 319/160);//1.45 * (5.5/4)
+		Objects.timer.delay(.15);
 		arm.setArmToFire(true);
-		drive.driveStraight(.75, .01, 2);
-		drive.turn(.75, 50);
-		drive.driveStraight(.75, .01, 6.5);
-		drive.turn(.75, -35);
-		arm.flywheelOut(.65);
+		arm.flywheelOut(.35);
+		Objects.timer.delay(1);
+		arm.flywheelOut(0);
 	}
 	
 	public static void crossLine() {
-		
+		drive.stopDrive();
 	}
 }
-<<<<<<< HEAD
-=======
-=======
-package org.usfirst.frc.team5450.robot.Autonomous;
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
-
-public class Middle {
-	
-	static DriveTrain drive = new DriveTrain();
-	
-	public static void middle() {
-		
-	}
-}
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
-=======
-package org.usfirst.frc.team5450.robot.Autonomous;
-import org.usfirst.frc.team5450.robot.RobotCommandFunctions.DriveTrain;
-
-public class Middle {
-	
-	static DriveTrain drive = new DriveTrain();
-	
-	public static void middle() {
-		
-	}
-}
->>>>>>> 310f06a3dd55bcbb49e72cf07e7a898e968c8fdf
->>>>>>> 3e0ad1fa6b0a3665e83f845e220f1d60cd159359

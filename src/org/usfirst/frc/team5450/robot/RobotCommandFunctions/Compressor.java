@@ -9,20 +9,20 @@ public class Compressor {
 	Relay relay = Objects.compRelay;
 	
 	public Compressor() {
-		set(false);
+		relay.set(Value.kOff);
 	}
 	
 	public void set() {
-		if (Objects.compressor.enabled())
-			/*relay.set(Value.kForward)*/;
+		if (Objects.compressor.enabled() == true)
+			relay.set(Value.kForward);
 		else
 			relay.set(Value.kOff);
 	}
 	
 	public void set(boolean state) {
 		if (state)
-			/*relay.set(Value.kForward)*/;
+			relay.set(Value.kForward);
 		else
 			relay.set(Value.kOff);
-	}
+	} 
 }

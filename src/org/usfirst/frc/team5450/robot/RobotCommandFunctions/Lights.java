@@ -27,15 +27,15 @@ public class Lights {
 				out3.set(false);
 				break;
 			case "catapultFire":
-				out1.set(false);
-				out2.set(false);
-				out3.set(false);
-				break;
-			case "idle":
-			default:
 				out1.set(true);
 				out2.set(true);
 				out3.set(true);
+				break;
+			case "idle":
+			default:
+				out1.set(false);
+				out2.set(false);
+				out3.set(false);
 		}
 	}
 }
