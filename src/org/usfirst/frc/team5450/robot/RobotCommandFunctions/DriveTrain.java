@@ -28,7 +28,7 @@ public class DriveTrain {
    
    
    
-    Solenoid shift = Objects.driveShift;
+    public Solenoid shift = Objects.driveShift;
     public boolean gearState = false;
    
     
@@ -90,8 +90,11 @@ public class DriveTrain {
     	
     	if (Math.abs(leftPower2) > Math.abs(leftPower1))
     		leftPower = leftPower2;
-    	else
+    	else 
     		leftPower = leftPower1;
+    	
+    	if (Math.abs(leftPower) < .08)
+    		leftPower = 0;
     	
     	double rightPower1 = joy.getRawAxis(rControl) * kMultiplier;
     	double rightPower2 = joy2.getRawAxis(rControl) * kMultiplier;
@@ -101,6 +104,9 @@ public class DriveTrain {
     		rightPower = rightPower2;
     	else
     		rightPower = rightPower1;
+    	
+    	if (Math.abs(rightPower) < .08)
+    		rightPower = 0;
     	
     	driveLeft1.set(-leftPower);
         driveLeft2.set(-leftPower);

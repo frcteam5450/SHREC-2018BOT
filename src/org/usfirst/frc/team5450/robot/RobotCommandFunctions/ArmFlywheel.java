@@ -3,6 +3,7 @@ package org.usfirst.frc.team5450.robot.RobotCommandFunctions;
 import org.usfirst.frc.team5450.robot.Objects;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Solenoid;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -10,15 +11,18 @@ public class ArmFlywheel extends ArmPivot {
 	
 	WPI_TalonSRX flywheelLeft = Objects.flywheelLeft;
 	WPI_TalonSRX flywheelRight = Objects.flywheelRight;
+	public Solenoid intakePiston = Objects.climbPiston;
 	
 	int iAxis = 2;
 	int oAxis = 3;
+	boolean pistonState = false;
 	
 	public ArmFlywheel(int intakeAxis , int outtakeAxis) {
 		iAxis = intakeAxis;
 		oAxis = outtakeAxis;
 		
 		armPivotMotor.set(0);
+		intakePiston.set(false);
 		
 		initArmPos = armPivotMotor.getSelectedSensorPosition(0);
 		armPos = initArmPos;
@@ -40,9 +44,9 @@ public class ArmFlywheel extends ArmPivot {
 			inSpeed = inSpeed1 * .7;
 		
 		if (outSpeed2 > outSpeed1)
-			outSpeed = outSpeed2 * .6;
+			outSpeed = outSpeed2 * 1;
 		else
-			outSpeed = outSpeed1 * .6;
+			outSpeed = outSpeed1 * 1;
 		
 		if (inSpeed > 0.1) {
 			flywheelLeft.set(inSpeed);
@@ -68,9 +72,8 @@ public class ArmFlywheel extends ArmPivot {
 	public void flywheelOut(double speed) {
 		flywheelLeft.set(-speed);
 		flywheelRight.set(-speed);
-		Objects.timer.delay(2.5);
-		flywheelLeft.set(0);
-		flywheelRight.set(0);
+		//flywheelLeft.set(0);
+		//flywheelRight.set(0);
 	}
 	
 	public void displayStats() {
@@ -79,5 +82,10 @@ public class ArmFlywheel extends ArmPivot {
 		SmartDashboard.putNumber("Arm Pivot Motor", armPivotMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Left Flywheel", flywheelLeft.getOutputCurrent());
 		SmartDashboard.putNumber("Right Flywheel", flywheelRight.getOutputCurrent());
+	}
+	
+	public void togglePiston() {
+		pistonState = !pistonState;
+		intakePiston.set(pistonState);
 	}
 }

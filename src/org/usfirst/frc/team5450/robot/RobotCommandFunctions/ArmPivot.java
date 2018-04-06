@@ -142,4 +142,16 @@ public class ArmPivot {
 		double power = (getArmDegree() - 180) * .01;
 		armPivotMotor.set(power);
 	}
+	
+	public void setArmToDegree(double degree) {
+		while (testBool && getArmDegree() <= degree) {
+			double power = (getArmDegree() - degree - 10);
+			armPivotMotor.set(power);
+			
+			//updates testBool
+			testBool = DriverStation.getInstance().isAutonomous();
+			timer.delay(.010);
+		}
+		armPivotMotor.set(0);
+	}
 }

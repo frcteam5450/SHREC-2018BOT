@@ -47,10 +47,10 @@ public class Climb {
 		climbingWinch.set(1);
 	}
 	
-	public void pistonClimb() {
+	/*public void pistonClimb() {
 		pistonState = !pistonState;
 		piston.set(pistonState);
-	}
+	}*/
 	
 	public void displayStats() {
 		SmartDashboard.putNumber("Climb Encoder", enc.getRaw());

@@ -60,6 +60,7 @@ public class Robot extends IterativeRobot {
 	private static final String defaultAutoAction = "Default";
 	private static final String crossLine = "Cross Line";
 	private static final String scoreSwitch = "Score Switch";
+	private static final String scoreSwitch2 = "Score Switch 2";
 	private static final String scoreScale = "Score Scale";
 	
 	private String autoAction;
@@ -98,6 +99,8 @@ public class Robot extends IterativeRobot {
 	CameraServer camera = CameraServer.getInstance();
 	CameraServer camera2 = CameraServer.getInstance();
 	
+	
+	
 	Timer teleopTimer = new Timer();
 	Timer catapultDelay = new Timer();
 	boolean catapultFiring = false;
@@ -129,7 +132,8 @@ public class Robot extends IterativeRobot {
 		
 		autoActionChooser.addDefault("Auto Actions - This is Default Action, Does Nothing", defaultAutoAction);
 		autoActionChooser.addObject("Cross Auto Line", crossLine);
-		autoActionChooser.addObject("Score on Switch", scoreSwitch);
+		autoActionChooser.addObject("Score on Switch Once(Normal Switch Auto)", scoreSwitch);
+		autoActionChooser.addObject("Score on Switch Twice(STILL TESTING, DON'T USE)", scoreSwitch2);
 		autoActionChooser.addObject("Score on Scale", scoreScale);
 		
 		autoDelayChooser.addDefault("Auto Delay - This is Default delay, 0 seconds", delay0);
@@ -146,6 +150,9 @@ public class Robot extends IterativeRobot {
 		
 		camera.startAutomaticCapture(0);
 		camera2.startAutomaticCapture(1);
+		
+		lights.setLights("idle");
+		lights.setColor(DriverStation.getInstance().getAlliance());
 	}
 
 	/**
@@ -165,8 +172,11 @@ public class Robot extends IterativeRobot {
 		
 		arm.setInitArmPos();
 		autoCheck = true;
+		lights.setColor(DriverStation.getInstance().getAlliance());
 		lights.setLights("lowGear");
 		double autoDelayTime;
+		
+		drive.shift.set(false);
 		
 		switch (autoDelay) {
 			case delay1:
@@ -248,6 +258,13 @@ public class Robot extends IterativeRobot {
 								Middle.rightSwitch();
 							break;
 							
+						case scoreSwitch2:
+							if (gameData.charAt(0) == 'L')
+								Middle.leftSwitch2();
+							if (gameData.charAt(0) == 'R')
+								Middle.rightSwitch2();
+							break;
+							
 						case scoreScale:
 						case defaultAutoAction:
 						default:
@@ -320,6 +337,8 @@ public class Robot extends IterativeRobot {
 		DriveTrain.encoder.reset();
 		arm.setInitArmPos();
 		
+		lights.setColor(DriverStation.getInstance().getAlliance());
+		
 		teleopTimer.reset();
 		teleopTimer.start();
 		catapultDelay.start();
@@ -345,7 +364,7 @@ public class Robot extends IterativeRobot {
 		 * Sets drive power based on controller,
 		 * and shows output current of motors on the SmartDashboard.
 		 */
-		drive.setPower(.75);
+		drive.setPowerDualDriver(.75);
 		drive.displayStats();
 		
 		if (drive.gearState && !catapultFiring)
@@ -411,7 +430,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		if (Objects.controller.getRawButton(10) == false && Objects.controller2.getRawButton(10) == false && lastArmPistonButtonState == true) {
-			climber.pistonClimb();
+			arm.togglePiston();
 			lastArmPistonButtonState = false;
 		}
 		/**
@@ -424,7 +443,7 @@ public class Robot extends IterativeRobot {
 		 * Only allows winch to be operated in the end game
 		 */
 		double teleopTime = teleopTimer.get();
-		if (teleopTime >= 100) {   /*NFBP removed time limit so intake arm can function all match*/
+		if (teleopTime >= 0) {   /*NFBP removed time limit so intake arm can function all match*/
 			if (Objects.controller.getRawButton(3) || Objects.controller2.getRawButton(3))
 				climber.retractArm();
 			
@@ -459,7 +478,7 @@ public class Robot extends IterativeRobot {
 				climber.stopClimb();
 		if (Objects.controller.getRawButton(10) || Objects.controller2.getRawButton(10)) {
 			while (Objects.controller.getRawButton(10) || Objects.controller2.getRawButton(10));
-			climber.pistonClimb();
+			arm.togglePiston();
 		}
 		
 		if (Objects.controller.getRawButton(3) || Objects.controller2.getRawButton(3))
@@ -474,6 +493,7 @@ public class Robot extends IterativeRobot {
 		arm.setArm(1500 , .0175);
 		arm.flywheel();
 		arm.displayStats();
+		//compressor.set();
 	}
 	
 }

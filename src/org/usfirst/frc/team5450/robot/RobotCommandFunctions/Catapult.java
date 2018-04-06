@@ -39,6 +39,13 @@ public class Catapult {
 			catapultRight.set(Value.kReverse);
 	}
 	
+	public void fireAuto() {
+		catapultTimer.start();
+		catapultLeft.set(Value.kReverse);
+		catapultTimer.delay(0.020);					//DELAY          HERE 
+		catapultRight.set(Value.kReverse);
+	}
+	
 	public void stop() {
 		catapultLeft.set(Value.kForward);
 		catapultRight.set(Value.kForward);
